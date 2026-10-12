@@ -1,0 +1,17 @@
+{
+  "name": "onramp-shop",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/*", "services/*"],
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "typecheck": "npm run typecheck --workspaces",
+    "test": "npm test --workspaces",
+    "changed": "node scripts/changed-services.ts",
+    "set-org": "node scripts/set-org.ts"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "typescript": "6.0.3"
+  }
+}

@@ -1,0 +1,18 @@
+# Reads the Conventional Commits on main and keeps one release PR open
+# per service, with its next version and its CHANGELOG.
+name: release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v5

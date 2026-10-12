@@ -1,0 +1,22 @@
+# The simple way: one job, one machine, every workspace one after another.
+# It doesn't matter what the PR changed: everything runs, every time.
+name: ci-simple
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test-everything:
+    runs-on: ubuntu-latest
+    env:
+      SIMULATED_DB_SECONDS: 40   # each service has one 40 s "database" test
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test              # shared, notifications, orders, payments: in sequence
