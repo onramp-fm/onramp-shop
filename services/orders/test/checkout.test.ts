@@ -13,3 +13,8 @@ test("shows a discount line when there is a discount", () => {
   assert.match(text, /Discount {2}-\$0\.50/);
   assert.match(text, /Total {2}\$3\.00/);
 });
+
+test("a discount never makes the total negative", () => {
+  const text = renderCheckout({ items: [{ name: "Pen", priceCents: 350 }] }, 1000);
+  assert.match(text, /Total {2}\$0\.00/);
+});
