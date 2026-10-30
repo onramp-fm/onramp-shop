@@ -7,4 +7,3 @@ export function renderCheckout(cart: Cart): string {
   const total = cart.items.reduce((sum, item) => sum + item.priceCents, 0);
   return ["Your order", ...lines, `Total to pay ${formatCents(total)}`].join("\n");
 }
-// TODO: payment step
