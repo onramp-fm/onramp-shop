@@ -1,0 +1,58 @@
+# The faster way: find what the PR changed, then test only those
+# workspaces, each on its own machine, all at the same time.
+name: ci-matrix
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # Job 1: which workspaces did this PR touch?
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      workspaces: ${{ steps.detect.outputs.workspaces }}
+    steps:
+      - uses: actions/checkout@v7
+        with: { fetch-depth: 0 }   # full history, so we can diff against main
+      - uses: actions/setup-node@v7
+        with: { node-version: 24 }
+      - id: detect
+        run: |
+          LIST=$(node scripts/changed-services.ts origin/${{ github.base_ref }} HEAD)
+          echo "Changed workspaces: $LIST"
+          echo "workspaces=$LIST" >> "$GITHUB_OUTPUT"
+
+  # Job 2: one copy of this job per changed workspace, in parallel.
+  test:
+    needs: changes
+    if: needs.changes.outputs.workspaces != '[]'
+    name: test ${{ matrix.workspace }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false             # one red service doesn't cancel the others
+      matrix:
+        workspace: ${{ fromJSON(needs.changes.outputs.workspaces) }}
+    env:
+      SIMULATED_DB_SECONDS: 40
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+      - run: npm run typecheck -w ${{ matrix.workspace }}
+      - run: npm test -w ${{ matrix.workspace }}
+
+  # Job 3: the one check the ruleset requires. Green only if every
+  # test job passed, or there was nothing to test.
+  ci-ok:
+    needs: [changes, test]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "changes: ${{ needs.changes.result }}, test: ${{ needs.test.result }}"
+          [ "${{ needs.changes.result }}" = "success" ] || exit 1
+          [ "${{ needs.test.result }}" = "success" ] || [ "${{ needs.test.result }}" = "skipped" ] || exit 1
