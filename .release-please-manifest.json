@@ -1,0 +1,5 @@
+{
+  "services/orders": "1.0.0",
+  "services/payments": "1.0.0",
+  "services/notifications": "1.0.0"
+}
