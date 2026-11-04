@@ -8,6 +8,12 @@ export const flags = {
     removeBy: "2027-01-31", // a date, not "soon"
     env: "FLAG_CHECKOUT_V2", // set it to "on" to try the new checkout
   },
+  ordersCsvExport: {
+    default: true,
+    owner: "@onramp/orders-team",
+    removeBy: "2026-10-15", // "we'll clean it up after launch"
+    env: "FLAG_ORDERS_CSV_EXPORT",
+  },
 };
 
 export type FlagName = keyof typeof flags;
