@@ -1,5 +1,6 @@
 import { formatCents } from "@onramp/shared";
 
+// A cart is a list of items with prices in cents.
 export type Cart = { items: { name: string; priceCents: number }[] };
 
 export function renderCheckout(cart: Cart, discountCents = 0): string {
