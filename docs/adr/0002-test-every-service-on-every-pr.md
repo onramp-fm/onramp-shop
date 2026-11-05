@@ -1,7 +1,7 @@
 # ADR-0002: Test every service on every pull request
 
 ## Status
-Accepted - 2026-10-12
+Superseded by ADR-0003 - 2026-11-05 (was: Accepted - 2026-10-12)
 
 ## Context
 We have three services and the full test run takes about two minutes.
