@@ -1,8 +1,8 @@
 # .github/CODEOWNERS   (the last matching rule wins)
-*                          @onramp/tech-leads
-/services/orders/          @onramp/orders-team
-/services/notifications/   @onramp/orders-team
-/services/payments/        @onramp/payments-team
-/packages/shared/          @onramp/platform-team
-/.github/                  @onramp/platform-team
-/docs/adr/                 @onramp/tech-leads
+*                          @onramp-demo-moustafawehbe/tech-leads
+/services/orders/          @onramp-demo-moustafawehbe/orders-team
+/services/notifications/   @onramp-demo-moustafawehbe/orders-team
+/services/payments/        @onramp-demo-moustafawehbe/payments-team
+/packages/shared/          @onramp-demo-moustafawehbe/platform-team
+/.github/                  @onramp-demo-moustafawehbe/platform-team
+/docs/adr/                 @onramp-demo-moustafawehbe/tech-leads

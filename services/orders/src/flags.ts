@@ -4,7 +4,7 @@
 export const flags = {
   checkoutV2: {
     default: false,
-    owner: "@onramp/orders-team",
+    owner: "@onramp-demo-moustafawehbe/orders-team",
     removeBy: "2027-01-31", // a date, not "soon"
     env: "FLAG_CHECKOUT_V2", // set it to "on" to try the new checkout
   },
