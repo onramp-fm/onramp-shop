@@ -1,6 +1,6 @@
-export type Refund = { chargeId: string; amountCents: number };
+export type Refund = { chargeId: string; amountCents: number; reason: string };
 
-// A full refund unless an amount is given.
-export function buildRefund(chargeId: string, chargedCents: number, amountCents?: number): Refund {
-  return { chargeId, amountCents: amountCents ?? chargedCents };
+// Every refund now needs a reason, for the finance team's reports.
+export function buildRefund(chargeId: string, chargedCents: number, reason: string, amountCents?: number): Refund {
+  return { chargeId, amountCents: amountCents ?? chargedCents, reason };
 }
