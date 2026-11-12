@@ -6,3 +6,8 @@ test("shows the total with tax", () => {
   const text = renderCheckoutV2({ items: [{ name: "Pen", priceCents: 1000 }] });
   assert.match(text, /Total with 11% tax \$11\.10/);
 });
+
+test("tells you how much more you need for free delivery", () => {
+  const text = renderCheckoutV2({ items: [{ name: "Pen", priceCents: 1000 }] });
+  assert.match(text, /Add \$40\.00 for free delivery/);
+});
